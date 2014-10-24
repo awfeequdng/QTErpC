@@ -29,6 +29,7 @@ FormArticuloTipo::FormArticuloTipo(QWidget *parent) :
     ui->eliminar->setEnabled(false);
     ui->guardar->setEnabled(true);
 
+    mRepisa=RepisaArticuloTipo::Iniciar();
 }
 
 void FormArticuloTipo::SetArticuloTipo(ArticuloTipo valor)
@@ -36,11 +37,15 @@ void FormArticuloTipo::SetArticuloTipo(ArticuloTipo valor)
 
     ui->nombre->setText(valor.getNombre());
     ui->codigo->setText(valor.getCodigo());
-    QPixmap pix=(Definiciones::toQpixmap(valor.getImagen()));
+    //revisar
+
+    QPixmap pix;
+    pix.load(valor.getImagen());
     ui->imagenlabel->setPixmap(pix.scaled(60,60,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
     ui->guardar->setEnabled(false);
     ui->modificar->setEnabled(true);
     ui->eliminar->setEnabled(true);
+    ui->nombre->setEnabled(false);
 }
 
 FormArticuloTipo::~FormArticuloTipo()
@@ -50,7 +55,7 @@ FormArticuloTipo::~FormArticuloTipo()
 
 void FormArticuloTipo::on_BotonArchivo_clicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Abrir Imagen"),QDir::homePath(),tr("Archivo Imagen (*.png)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Abrir Imagen"),RutaImagenes,tr("Archivo Imagen (*.png)"));
 
    if (!fileName.isEmpty())
    {
@@ -147,6 +152,8 @@ void FormArticuloTipo::on_guardar_clicked()
     ui->guardar->setEnabled(false);
     ui->eliminar->setEnabled(true);
     ui->modificar->setEnabled(true);
+    mRepisa->ActualizarMapa();
+    this->close();
 }
 
 void FormArticuloTipo::on_eliminar_clicked()
@@ -160,4 +167,5 @@ void FormArticuloTipo::on_modificar_clicked()
     ui->modificar->setEnabled(false);
     ui->guardar->setEnabled(true);
     ui->eliminar->setEnabled(false);
+    ui->nombre->setEnabled(true);
 }

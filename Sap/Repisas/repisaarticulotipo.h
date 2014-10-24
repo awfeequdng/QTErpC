@@ -1,15 +1,17 @@
 #ifndef REPISAARTICULOTIPO_H
 #define REPISAARTICULOTIPO_H
 #include <QMainWindow>
-#include  "../Repisas/repisa.h"
-#include "../Fabricas/fabricaarticulotipos.h"
-#include "../Fabricas/fabricabasedatos.h"
 #include <QSet>
 #include <vector>
 #include <QButtonGroup>
-#include "../Formularios/formarticulotipo.h"
+#include  "../Repisas/repisa.h"
+#include "../Fabricas/fabricaarticulotipos.h"
+#include "../Fabricas/fabricabasedatos.h"
 
+#include "../Formularios/formarticulotipo.h"
+#include "../DefBD.h"
 using namespace std;
+class FormArticuloTipo;
 class RepisaArticuloTipo:public Repisa
 {
     Q_OBJECT
@@ -23,12 +25,13 @@ private:
   FormArticuloTipo*              Dialogo;
 
   int elementos;
+  static RepisaArticuloTipo* mUnico;
+  RepisaArticuloTipo();
 public:
-    RepisaArticuloTipo();
-
 
     void LlenarRepisa();
     void ActualizarMapa();
+    static RepisaArticuloTipo* Iniciar();
 public slots:
     void NuevoClick();
     void BuscarClick();

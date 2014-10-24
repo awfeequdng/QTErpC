@@ -5,6 +5,8 @@
 
 #include "../Fabricas/fabricaclientes.h"
 #include "../Fabricas/fabricaarticulotipos.h"
+#include "../Fabricas/fabricaimagenes.h"
+
 
 using namespace std;
 
@@ -47,7 +49,7 @@ public:
 
     virtual FabricaClientes       *CrearCliente()=0;
     virtual FabricaArticuloTipos  *CrearArticuloTipo()=0;
-
+    virtual FabricaImagenes       *CrearImagen()=0;
 
 };
 

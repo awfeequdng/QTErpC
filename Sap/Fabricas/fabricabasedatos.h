@@ -2,13 +2,10 @@
 #define FABRICABASEDATOS_H
 #include "../Objetos/basedatos.h"
 #include "../Postgres/postgres.h"
-enum BASEDATOS
-{
-VACIO,
-POSTGRES,
-MONGO
-};
+//#include "../Definiciones.h"
 
+
+struct Definiciones;
 class FabricaBaseDatos
 {
 

@@ -53,3 +53,9 @@ FabricaArticuloTipos *Postgres::CrearArticuloTipo()
 {
     return new PgArticuloTipo();
 }
+
+
+FabricaImagenes *Postgres::CrearImagen()
+{
+     return new PgImagen();
+}

@@ -8,6 +8,15 @@
 #include <QImage>
 #include <QIcon>
 #include <QPixmap>
+#include <QDir>
+
+
+enum BASEDATOS
+{
+VACIO,
+POSTGRES,
+MONGO
+};
 enum ESTADO
 {
     INSERTAR,
@@ -19,8 +28,32 @@ enum CONSULTA
     CAMPOS,
     TODO
 };
+
+/*      BOTONES DE FORMULARIOS */
+static QString BotonGuardar=":/Imagenes/iconos/guardar.png";
+static QString BotonModificar=":/Imagenes/iconos/editar.png";
+static QString BotonEliminar=":/Imagenes/iconos/delete.png";
+static QString BotonDerecha;
+static QString BotonIzquierda;
+static QString BotonNuevo;
+static QString BotonBuscar;
+static QString FondoForm=":/Imagenes/fondos/madera4";
+/*Ruta Imagen*/
+static QString RutaImagenes="c:/Sap/Imagenes/";
+
+
 struct Definiciones
 {
+
+static QIcon   toQicon(QString ruta)
+{
+        QPixmap p;
+        p.load(ruta);
+       // p.loadFromData(ruta,"PNG");
+        QIcon ic;
+        ic.addPixmap(p);
+        return ic;
+}
 static QIcon   toQicon(QByteArray bytea)
 {
     QPixmap p;
@@ -59,17 +92,9 @@ static QByteArray toQByteArray(QString image)
     return arr;
 }
 
+
 };
 
-/*      BOTONES DE FORMULARIOS */
-static QString BotonGuardar=":/Imagenes/iconos/guardar.png";
-static QString BotonModificar=":/Imagenes/iconos/editar.png";
-static QString BotonEliminar=":/Imagenes/iconos/delete.png";
-static QString BotonDerecha;
-static QString BotonIzquierda;
-static QString BotonNuevo;
-static QString BotonBuscar;
-static QString FondoForm=":/Imagenes/fondos/madera4";
 
 
 

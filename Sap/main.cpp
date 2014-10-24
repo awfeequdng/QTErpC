@@ -4,6 +4,8 @@
 #include "Objetos.h"
 #include "Repisas/repisaarticulotipo.h"
 #include "Formularios/formarticulotipo.h"
+
+#include "Extras/visorimagenes.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -38,10 +40,11 @@ int main(int argc, char *argv[])
        else
        { qDebug()<<"no hay conexion";}
 */
-    RepisaArticuloTipo w;
 
+       VisorImagenes w;
+   // RepisaArticuloTipo* w=RepisaArticuloTipo::Iniciar();
+  w.show();
 
-   w.show();
 
 
     return a.exec();

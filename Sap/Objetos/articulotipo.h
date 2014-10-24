@@ -16,15 +16,15 @@ class ArticuloTipo:public QIcon
 protected:
     QString Codigo;
     QString Nombre;
-    QByteArray Imagen;
+    QString Imagen;
 public:
     ArticuloTipo();
     QString getCodigo() const;
     void setCodigo(const QString &value);
     QString getNombre() const;
     void setNombre(const QString &value);
-    QByteArray getImagen() const;
-    void setImagen(const QByteArray &value);
+    QString getImagen() const;
+    void setImagen(const QString &value);
 
 
 };

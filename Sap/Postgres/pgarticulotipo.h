@@ -6,6 +6,7 @@
 #include <QVariant>
 #include <qdebug.h>
 #include <QMap>
+
 class PgArticuloTipo:public FabricaArticuloTipos
 {
 public:

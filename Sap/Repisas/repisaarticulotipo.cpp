@@ -5,7 +5,7 @@ RepisaArticuloTipo::RepisaArticuloTipo():Repisa()
     ActualizarMapa();
 }
 
-
+RepisaArticuloTipo* RepisaArticuloTipo::mUnico=0;
 
 
 
@@ -20,7 +20,6 @@ void RepisaArticuloTipo::BuscarClick()
 {
      qDebug()<<"buscar desde repisa nueva";
 }
-
 
 void RepisaArticuloTipo::LlenarRepisa()
 {
@@ -45,7 +44,13 @@ void RepisaArticuloTipo::LlenarRepisa()
             QPushButton* pp=new QPushButton(this);
             // qDebug()<<it.value().getCodigo();
             pp->setObjectName(it.value().getCodigo());
+
+            /*como es imagen hay q validar si la tenemos o no*/
+            QString Limg=it.value().getImagen();
+            DefBD::GuardarImagen(Limg);
+            /*-------------------------------------------------*/
             pp->setIcon(Definiciones::toQicon(it.value().getImagen()));
+
             pp->setIconSize(QSize(55,55));
             pp->setFlat(true);
             pp->setGeometry(x,y,55,55);
@@ -81,7 +86,7 @@ void RepisaArticuloTipo::LlenarRepisa()
 
 void RepisaArticuloTipo::ActualizarMapa()
 {
-    Bd=FabricaBaseDatos::IniciarFabrica(POSTGRES);
+    Bd=DefBD::IniciarBD();
     FabricaLocal=Bd->Fabrica->CrearArticuloTipo();
     Bd->Fabrica->Conectar();
     Mapa=FabricaLocal->BuscarMapa(ArticuloTipo(),TODO);
@@ -93,6 +98,17 @@ void RepisaArticuloTipo::ActualizarMapa()
 
     elementos=0;
     SiguienteClick();
+}
+
+RepisaArticuloTipo *RepisaArticuloTipo::Iniciar()
+{
+    if(mUnico==NULL)
+    {
+        mUnico=new RepisaArticuloTipo();
+    }
+
+    return mUnico;
+
 }
 
 
@@ -109,7 +125,6 @@ void RepisaArticuloTipo::AtrasClick()
     }
      Botones.clear();
      LlenarRepisa();
-
 }
 
 void RepisaArticuloTipo::SiguienteClick()
@@ -138,7 +153,6 @@ void RepisaArticuloTipo::GrupoBotonesClick(QAbstractButton* buttonID)
     Bd=FabricaBaseDatos::IniciarFabrica(POSTGRES);
     FabricaLocal=Bd->Fabrica->CrearArticuloTipo();
     Bd->Fabrica->Conectar();
-
 
 
     Bd->Fabrica->Desconectar();

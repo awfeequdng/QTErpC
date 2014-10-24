@@ -7,9 +7,12 @@
 #include "../Definiciones.h"
 #include "../Fabricas.h"
 #include "../Objetos.h"
+#include "../Repisas/repisaarticulotipo.h"
+#include "../DefBD.h"
 namespace Ui {
 class FormArticuloTipo;
 }
+class RepisaArticuloTipo;
 
 class FormArticuloTipo : public QWidget
 {
@@ -34,6 +37,7 @@ private slots:
 private:
     Ui::FormArticuloTipo *ui;
     ESTADO Estado;
+    RepisaArticuloTipo* mRepisa;
 
 protected:
     void mousePressEvent(QMouseEvent *evt)

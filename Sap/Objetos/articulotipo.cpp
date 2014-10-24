@@ -21,12 +21,12 @@ void ArticuloTipo::setNombre(const QString &value)
     Nombre = value;
 }
 
-QByteArray ArticuloTipo::getImagen() const
+QString ArticuloTipo::getImagen() const
 {
     return Imagen;
 }
 
-void ArticuloTipo::setImagen(const QByteArray &value)
+void ArticuloTipo::setImagen(const QString &value)
 {
     Imagen = value;
 }

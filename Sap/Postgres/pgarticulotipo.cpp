@@ -1,5 +1,7 @@
 #include "pgarticulotipo.h"
 
+
+
 PgArticuloTipo::PgArticuloTipo()
 {
 }
@@ -110,8 +112,14 @@ ArticuloTipo PgArticuloTipo::Buscar(ArticuloTipo valor)
       while (query.next() && flag ) {
           resp.setCodigo(query.value(0).toString());
           resp.setNombre(query.value(1).toString());
-          resp.setImagen(query.value(2).toByteArray());
-          flag=false;
+          resp.setImagen(query.value(2).toString());
+
+          /*como es imagen hay q validar*/
+          QString Limg=resp.getImagen();
+
+          //DefBD::GuardarImagen(Limg);
+
+         flag=false;
       }
 
 
@@ -162,7 +170,7 @@ QMap<QString, ArticuloTipo> *PgArticuloTipo::BuscarMapa(ArticuloTipo valor, CONS
           ArticuloTipo resp;
           resp.setCodigo(query.value(0).toString());
           resp.setNombre(query.value(1).toString());
-          resp.setImagen(query.value(2).toByteArray());
+          resp.setImagen(query.value(2).toString());
 
           salida->insert(resp.getCodigo(), resp);
 

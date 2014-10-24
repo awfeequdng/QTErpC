@@ -4,6 +4,7 @@
 #include <QSqlDatabase>
 #include "pgcliente.h"
 #include "pgarticulotipo.h"
+#include "pgimagen.h"
 class Postgres:public BaseDatos
 {
 private:
@@ -21,7 +22,8 @@ public:
     // BaseDatos interface
 public:
     FabricaClientes *CrearCliente();
-    FabricaArticuloTipos *CrearArticuloTipo();
+    FabricaArticuloTipos *CrearArticuloTipo();   
+    FabricaImagenes *CrearImagen();
 };
 
 #endif // POSTGRES_H
