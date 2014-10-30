@@ -34,3 +34,7 @@ Makefile*
 *.rc
 *.manifest
 Sap/Sap.pro
+*.obj
+*.exe
+*.ilk
+*.pdb
