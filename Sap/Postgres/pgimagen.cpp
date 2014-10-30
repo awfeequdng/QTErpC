@@ -182,7 +182,6 @@ QMap<QString, Imagen> *PgImagen::BuscarMapa(Imagen valor, CONSULTA tipo)
           resp.setCarpeta(query.value(1).toString());
           resp.setNombre(query.value(2).toString());
           resp.setPixel(query.value(3).toByteArray());
-
           salida->insert(resp.getCodigo(), resp);
       }
 

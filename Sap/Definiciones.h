@@ -49,6 +49,7 @@ static QIcon   toQicon(QString ruta)
 {
         QPixmap p;
         p.load(ruta);
+
        // p.loadFromData(ruta,"PNG");
         QIcon ic;
         ic.addPixmap(p);

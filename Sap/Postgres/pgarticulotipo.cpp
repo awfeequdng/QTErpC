@@ -126,7 +126,7 @@ ArticuloTipo PgArticuloTipo::Buscar(ArticuloTipo valor)
     return resp;
 }
 
-QMap<QString, ArticuloTipo> *PgArticuloTipo::BuscarMapa(ArticuloTipo valor, CONSULTA tipo)
+QMap<QString, ObjetoMaestro *> *PgArticuloTipo::BuscarMapa(ArticuloTipo valor, CONSULTA tipo)
 {
 
 
@@ -160,19 +160,19 @@ QMap<QString, ArticuloTipo> *PgArticuloTipo::BuscarMapa(ArticuloTipo valor, CONS
 
     qDebug()<<consulta;
 
-    QMap<QString,ArticuloTipo>* salida=new QMap<QString,ArticuloTipo>();
+    QMap<QString,ObjetoMaestro*>* salida=new QMap<QString,ObjetoMaestro*>();
 
 
     QSqlQuery query(consulta);
 
       while (query.next() ) {
 
-          ArticuloTipo resp;
-          resp.setCodigo(query.value(0).toString());
-          resp.setNombre(query.value(1).toString());
-          resp.setImagen(query.value(2).toString());
+          ArticuloTipo* resp=new ArticuloTipo();
+          resp->setCodigo(query.value(0).toString());
+          resp->setNombre(query.value(1).toString());
+          resp->setImagen(query.value(2).toString());
 
-          salida->insert(resp.getCodigo(), resp);
+          salida->insert(resp->getCodigo(),(ObjetoMaestro*)resp);
 
       }
 //qDebug()<<salida->begin().key();

@@ -21,9 +21,10 @@ static FabricaBaseDatos* IniciarBD()
 static void GuardarImagen(QString CarpetaImagen)
 {
 
+    /*carpeta/gato.png*/
     int Sep=CarpetaImagen.indexOf("/");
        QString CarpetaLocal=CarpetaImagen.mid(0,Sep);
-       QString Ruta=CarpetaImagen.mid(Sep);
+       QString Ruta=CarpetaImagen.mid(Sep+1);
 
        /*Verifica si hay la carpeta, si no la crea*/
        QDir dir(RutaImagenes+CarpetaLocal);
@@ -41,9 +42,23 @@ static void GuardarImagen(QString CarpetaImagen)
            FabricaImagenes* img=IniciarBD()->Fabrica->CrearImagen();
            Imagen d=img->Buscar(i);
            QPixmap pixmap=Definiciones::toQpixmap(d.getPixel());
-           pixmap.save(RutaImagenes+CarpetaLocal+"/"+Ruta,"jpg");
+           pixmap.save(RutaImagenes+CarpetaLocal+"/"+Ruta,"png");
 
        }
 }
+
+static QIcon   toQicon(QString ruta)
+{
+        QPixmap p;
+        if(!p.load(RutaImagenes+ruta))
+        {
+            GuardarImagen(ruta);
+        }
+       // p.loadFromData(ruta,"PNG");
+        QIcon ic;
+        ic.addPixmap(p);
+        return ic;
+}
+
 };
 #endif // DEFBD_H

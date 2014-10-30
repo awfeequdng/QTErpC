@@ -18,7 +18,7 @@ public:
     bool Insertar(ArticuloTipo valor);
     bool Actualizar(ArticuloTipo Antiguo, ArticuloTipo Nuevo);
     ArticuloTipo Buscar(ArticuloTipo valor);
-    QMap<QString, ArticuloTipo> *BuscarMapa(ArticuloTipo valor, CONSULTA tipo);
+    QMap<QString, ObjetoMaestro*> *BuscarMapa(ArticuloTipo valor, CONSULTA tipo);
     int Contar();
 };
 

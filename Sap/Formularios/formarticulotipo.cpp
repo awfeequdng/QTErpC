@@ -37,10 +37,9 @@ void FormArticuloTipo::SetArticuloTipo(ArticuloTipo valor)
 
     ui->nombre->setText(valor.getNombre());
     ui->codigo->setText(valor.getCodigo());
-    //revisar
 
     QPixmap pix;
-    pix.load(valor.getImagen());
+    pix.load(RutaImagenes+valor.getImagen());
     ui->imagenlabel->setPixmap(pix.scaled(60,60,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
     ui->guardar->setEnabled(false);
     ui->modificar->setEnabled(true);

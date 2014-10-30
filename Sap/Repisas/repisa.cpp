@@ -13,6 +13,7 @@ QMainWindow* Repisa::Formulario=0;
 
 Repisa::Repisa()
 {
+    elementos=0;
    Formulario=this;
 Formulario->setGeometry(100,100,420,577);
 
@@ -138,11 +139,32 @@ void Repisa::AtrasClick()
 {
 
     qDebug()<<"funciona click Atras desde original";
+    it-=elementos+5;
+
+    for(int a=0; a<Botones.size(); a++)
+    {
+
+        GrupoBotones->removeButton(Botones[a]);
+        delete Botones[a];
+    }
+     Botones.clear();
+     LlenarRepisa();
 }
 
 void Repisa::SiguienteClick()
 {
     qDebug()<<"funciona click Siguiente desde original";
+
+    for(int a=0; a<Botones.size(); a++)
+    {
+
+        GrupoBotones->removeButton(Botones[a]);
+        delete Botones[a];
+
+    }
+
+    Botones.clear();
+    LlenarRepisa();
 }
 
 void Repisa::NuevoClick()
@@ -186,4 +208,66 @@ void Repisa::Dibujar()
     Cerrar->setIconSize(QSize(60,60));
     Cerrar->setFlat(true);
     Cerrar->setGeometry(325,245,60,60);
+}
+
+void Repisa::LlenarRepisa()
+{
+    fil=1;
+    col=1;
+    ix=40;
+    iy=48;
+    elementos=0;
+    if(it==Mapa->begin())
+    {
+        Atras->setEnabled(false);
+    }
+    else
+    {
+          Atras->setEnabled(true);
+    }
+    while (it!=Mapa->end()&&fil<=5)
+    {
+
+        if(col<=4)
+        {
+/*
+            QPushButton* pp=new QPushButton(this);
+            ArticuloTipo *i=(ArticuloTipo*)(it.value());
+
+            // qDebug()<<it.value().getCodigo();
+            pp->setObjectName(i->getCodigo());
+            pp->setIcon(DefBD::toQicon(i->getImagen()));
+            pp->setIconSize(QSize(55,55));
+            pp->setFlat(true);
+            pp->setGeometry(x,y,55,55);
+            pp->setToolTip("Codigo: "+i->getCodigo()+"\n"+"Nombre: "+i->getNombre());
+            GrupoBotones->addButton(pp);
+            Botones.push_back(pp);
+            pp->setVisible(true);
+*/
+            ObjetosIndependientes();
+            ix=ix+60;
+            col++;
+            it++;
+            elementos++;
+        }
+        else
+        {
+            ix=40;
+            col=1;
+            iy=iy+104;
+            fil++;
+        }
+
+
+   }
+
+    if(it==Mapa->end())
+    {
+        Siguiente->setEnabled(false);
+    }
+    else
+    {
+         Siguiente->setEnabled(true);
+    }
 }

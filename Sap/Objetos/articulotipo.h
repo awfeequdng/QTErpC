@@ -7,11 +7,11 @@
 #include <QString>
 #include <QFile>
 #include <QIcon>
-
+#include "objetomaestro.h"
 
 using namespace std;
 
-class ArticuloTipo:public QIcon
+class ArticuloTipo:public QIcon,ObjetoMaestro
 {
 protected:
     QString Codigo;
