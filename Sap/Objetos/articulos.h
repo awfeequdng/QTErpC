@@ -7,8 +7,9 @@
 #include <QString>
 #include <QFile>
 #include <QIcon>
+#include "objetomaestro.h"
 
-class Articulos:public QIcon
+class Articulos:public QIcon,ObjetoMaestro
 {
 protected:
     QString Codigo;

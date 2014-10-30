@@ -8,7 +8,7 @@ struct DefBD
 static FabricaBaseDatos* IniciarBD()
     {
      FabricaBaseDatos* mybd=FabricaBaseDatos::IniciarFabrica(POSTGRES);
-          mybd->Fabrica->setDataBaseName("Copia_Core");
+          mybd->Fabrica->setDataBaseName("Datos2");
           mybd->Fabrica->setHostName("localhost");
           mybd->Fabrica->setPort(5432);
           mybd->Fabrica->setUserName("postgres");

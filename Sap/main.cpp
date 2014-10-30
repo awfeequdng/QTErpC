@@ -3,6 +3,7 @@
 #include "Fabricas.h"
 #include "Objetos.h"
 #include "Repisas/repisaarticulotipo.h"
+#include "Repisas/repisaarticulos.h"
 #include "Formularios/formarticulotipo.h"
 
 #include "Extras/visorimagenes.h"
@@ -10,12 +11,6 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    FabricaBaseDatos* mybd=FabricaBaseDatos::IniciarFabrica(POSTGRES);
-       mybd->Fabrica->setDataBaseName("Copia_Core");
-       mybd->Fabrica->setHostName("localhost");
-       mybd->Fabrica->setPort(5432);
-       mybd->Fabrica->setUserName("postgres");
-       mybd->Fabrica->setPassword("root");
 /*
        mybd->Fabrica->Conectar();
        if (mybd->Fabrica->HayConexion())
@@ -41,9 +36,11 @@ int main(int argc, char *argv[])
        { qDebug()<<"no hay conexion";}
 */
 
-       VisorImagenes w;
+       //VisorImagenes w;
+    RepisaArticulos* w =RepisaArticulos::Iniciar();
+
    // RepisaArticuloTipo* w=RepisaArticuloTipo::Iniciar();
-  w.show();
+  //w.show();
 
 
 
