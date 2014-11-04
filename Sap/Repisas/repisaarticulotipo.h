@@ -6,8 +6,8 @@
 #include <QButtonGroup>
 #include  "../Repisas/repisa.h"
 #include "../Fabricas/fabricaarticulotipos.h"
-
 #include "../Formularios/formarticulotipo.h"
+#include "../Busqueda/busquedaarticulotipos.h"
 #include "../DefBD.h"
 using namespace std;
 class FormArticuloTipo;
@@ -16,12 +16,13 @@ class RepisaArticuloTipo:public Repisa
     Q_OBJECT
 private:
   FabricaArticuloTipos*         FabricaLocal;
-  FormArticuloTipo*              Dialogo;
+  FormArticuloTipo*             Dialogo;
+  BusquedaArticuloTipos*        Busqueda;
   static RepisaArticuloTipo* mUnico;
   RepisaArticuloTipo();
 public:
 
-    void ActualizarMapa();
+    void ActualizarConsulta();
     void ObjetosIndependientes();
     static RepisaArticuloTipo* Iniciar();
 public slots:

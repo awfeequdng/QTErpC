@@ -9,12 +9,13 @@
 #include "../Objetos.h"
 #include "../Repisas/repisaarticulotipo.h"
 #include "../DefBD.h"
+#include "../Extras/visorimagenes.h"
 namespace Ui {
 class FormArticuloTipo;
 }
 class RepisaArticuloTipo;
 
-class FormArticuloTipo : public QWidget
+class FormArticuloTipo : public QDialog
 {
     Q_OBJECT
 
@@ -33,6 +34,10 @@ private slots:
     void on_eliminar_clicked();
 
     void on_modificar_clicked();
+
+    /*Agregar esto para cada ves que se desee llamar una imagen*/
+    void Ruta(QString Cadena);
+    /*-------------------------*/
 
 private:
     Ui::FormArticuloTipo *ui;

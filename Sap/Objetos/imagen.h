@@ -5,8 +5,10 @@
 #include <string>
 #include <QDate>
 #include <QString>
+#include "objetomaestro.h"
+
 using namespace std;
-class Imagen
+class Imagen:public ObjetoMaestro
 {
 private:
     QString Codigo;

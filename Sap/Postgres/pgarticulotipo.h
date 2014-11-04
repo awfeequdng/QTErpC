@@ -18,8 +18,9 @@ public:
     bool Insertar(ArticuloTipo valor);
     bool Actualizar(ArticuloTipo Antiguo, ArticuloTipo Nuevo);
     ArticuloTipo Buscar(ArticuloTipo valor);
-    QMap<QString, ObjetoMaestro*> *BuscarMapa(ArticuloTipo valor, CONSULTA tipo);
+    QMap<QString, ObjetoMaestro*> *BuscarMapa(ObjetoMaestro* valor,QString Extra, CONSULTA tipo);
     int Contar();
+    QSqlQueryModel *BuscarTabla(ArticuloTipo valor, QString Extra, CONSULTA tipo);
 };
 
 #endif // PGARTICULOTIPO_H

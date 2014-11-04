@@ -4,10 +4,11 @@
 #include <QFileDialog>
 
 FormArticuloTipo::FormArticuloTipo(QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::FormArticuloTipo)
 {
     ui->setupUi(this);
+
     this->setWindowFlags(Qt::Window
                          | Qt::FramelessWindowHint
                          | Qt::WindowMinimizeButtonHint
@@ -45,6 +46,7 @@ void FormArticuloTipo::SetArticuloTipo(ArticuloTipo valor)
     ui->modificar->setEnabled(true);
     ui->eliminar->setEnabled(true);
     ui->nombre->setEnabled(false);
+    ui->BotonArchivo->setEnabled(false);
 }
 
 FormArticuloTipo::~FormArticuloTipo()
@@ -54,16 +56,9 @@ FormArticuloTipo::~FormArticuloTipo()
 
 void FormArticuloTipo::on_BotonArchivo_clicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Abrir Imagen"),RutaImagenes,tr("Archivo Imagen (*.png)"));
+    VisorImagenes* v=new VisorImagenes(this);
+    v->exec();
 
-   if (!fileName.isEmpty())
-   {
-     QPixmap*  pix=new QPixmap(fileName);
-
-       ui->imagenlabel->setPixmap(pix->scaled(60,60,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
-       ui->imagen->setText(fileName);
-
-    }
 }
 
 void FormArticuloTipo::on_tabWidget_tabBarClicked(int index)
@@ -82,11 +77,14 @@ void FormArticuloTipo::on_guardar_clicked()
     if(Estado==INSERTAR)
     {
         ArticuloTipo* objeto=new ArticuloTipo();
-        objeto->setImagen(Definiciones::toQByteArray(ui->imagen->text()));
+        objeto->setImagen(ui->imagen->text());
         objeto->setNombre(ui->nombre->text());
+
+
 
         if(Bd->Fabrica->Conectar())
         {
+
             if(Fobj->Insertar(*objeto))
             {
                 QMessageBox mensaje;
@@ -118,7 +116,7 @@ void FormArticuloTipo::on_guardar_clicked()
         objAnt->setCodigo(ui->codigo->text());
 
         ArticuloTipo* objMod=new ArticuloTipo();
-        objMod->setImagen(Definiciones::toQByteArray(ui->imagen->text()));
+        objMod->setImagen(ui->imagen->text());
         objMod->setNombre(ui->nombre->text());
 
         if(Bd->Fabrica->Conectar())
@@ -151,7 +149,7 @@ void FormArticuloTipo::on_guardar_clicked()
     ui->guardar->setEnabled(false);
     ui->eliminar->setEnabled(true);
     ui->modificar->setEnabled(true);
-    mRepisa->ActualizarMapa();
+    mRepisa->ActualizarMapa((ObjetoMaestro*)new ArticuloTipo());
     this->close();
 }
 
@@ -167,4 +165,19 @@ void FormArticuloTipo::on_modificar_clicked()
     ui->guardar->setEnabled(true);
     ui->eliminar->setEnabled(false);
     ui->nombre->setEnabled(true);
+    ui->BotonArchivo->setEnabled(true);
+}
+
+void FormArticuloTipo::Ruta(QString Cadena)
+{
+    QString fileName = Cadena;
+
+   if (!fileName.isEmpty())
+   {
+     QPixmap*  pix=new QPixmap(RutaImagenes+fileName);
+
+       ui->imagenlabel->setPixmap(pix->scaled(60,60,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
+       ui->imagen->setText(fileName);
+
+    }
 }

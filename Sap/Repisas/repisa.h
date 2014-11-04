@@ -8,6 +8,7 @@
 #include "../Objetos/objetomaestro.h"
 #include <vector>
 #include "../Fabricas/fabricabasedatos.h"
+#include "../DefBD.h"
 using namespace std;
 class Repisa:public QMainWindow
 {
@@ -22,19 +23,26 @@ protected:
 
   QMap<QString,ObjetoMaestro*>*   Mapa;
   QMap<QString,ObjetoMaestro*>::iterator it;
+
   vector<QPushButton*>          Botones;
   QButtonGroup*                 GrupoBotones;
   FabricaBaseDatos*             Bd;
 
+  int RegistrosTabla;
   int elementos;
+  int TotalElementos;
+  int ElementosContados;
   int fil;
   int col;
   int ix;
   int iy;
 private:
+    void LimpiarRepisa();
 
 
+private slots:
 
+   virtual void ActualizarRepisa(ObjetoMaestro * Objeto);
 
 public slots:
 
@@ -42,14 +50,16 @@ public slots:
     virtual void SiguienteClick();
     virtual void NuevoClick();
     virtual void BuscarClick();
+    virtual void CerrarClick();
 public:
-
+static ObjetoMaestro* ObjetoConsulta;
     Repisa();
     void DibujarRepisa();
     void Dibujar();
     virtual void LlenarRepisa();
     virtual void ObjetosIndependientes()=0;
-
+    virtual void ActualizarMapa(ObjetoMaestro* Objeto);
+    virtual void ActualizarConsulta()=0;
 protected:
     void mousePressEvent(QMouseEvent *evt)
     {

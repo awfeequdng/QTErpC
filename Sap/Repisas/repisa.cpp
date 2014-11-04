@@ -14,8 +14,12 @@ QMainWindow* Repisa::Formulario=0;
 Repisa::Repisa()
 {
     elementos=0;
+    TotalElementos=0;
+    ElementosContados=0;
+
+    Bd=DefBD::IniciarBD();
    Formulario=this;
-Formulario->setGeometry(100,100,420,577);
+   Formulario->setGeometry(100,100,420,577);
 
    Formulario->setWindowFlags(Qt::Window
                         | Qt::FramelessWindowHint
@@ -24,15 +28,15 @@ Formulario->setGeometry(100,100,420,577);
                         | Qt::WindowCloseButtonHint);
 
     QPixmap bkgnd(":/Imagenes/fondos/madera4.png");
-       bkgnd = bkgnd.scaled(Formulario->size(), Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
-       QPalette palette;
-       palette.setBrush(QPalette::Background, bkgnd);
-       Formulario->setPalette(palette);
+    bkgnd = bkgnd.scaled(Formulario->size(), Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, bkgnd);
+    Formulario->setPalette(palette);
 
 
 
 
-DibujarRepisa();
+       DibujarRepisa();
        Atras= new QPushButton(Formulario);
        Siguiente= new QPushButton(Formulario);
        Nuevo= new QPushButton(Formulario);
@@ -44,10 +48,10 @@ DibujarRepisa();
         connect(Siguiente, SIGNAL(clicked()),Formulario, SLOT(SiguienteClick()));
         connect(Nuevo, SIGNAL(clicked()),Formulario, SLOT(NuevoClick()));
         connect(Buscar, SIGNAL(clicked()),Formulario, SLOT(BuscarClick()));
-
-//LlenarRepisa();
+        connect(Cerrar, SIGNAL(clicked()), Formulario, SLOT(CerrarClick()));
 
 }
+ObjetoMaestro* Repisa::ObjetoConsulta=0;
 
 void Repisa::DibujarRepisa()
 {
@@ -130,17 +134,9 @@ void Repisa::DibujarRepisa()
     division5->setPixmap(pix->scaled(71,146,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
     division5->setGeometry(271,401-y,71,146);
 
-
-
-
-
 }
-void Repisa::AtrasClick()
+void Repisa::LimpiarRepisa()
 {
-
-    qDebug()<<"funciona click Atras desde original";
-    it-=elementos+5;
-
     for(int a=0; a<Botones.size(); a++)
     {
 
@@ -148,23 +144,94 @@ void Repisa::AtrasClick()
         delete Botones[a];
     }
      Botones.clear();
-     LlenarRepisa();
+}
+
+void Repisa::ActualizarRepisa(ObjetoMaestro *Objeto)
+{
+    elementos=0;
+    TotalElementos=0;
+    ElementosContados=0;
+    ObjetoConsulta=Objeto;
+    ActualizarConsulta();
+    it=Mapa->begin();
+    LlenarRepisa();
+    ElementosContados=ElementosContados+elementos;
+    TotalElementos=TotalElementos+elementos;
+    qDebug()<<"-->"<<TotalElementos;
+
+}
+
+void Repisa::AtrasClick()
+{
+
+
+      TotalElementos=TotalElementos-elementos;
+      ElementosContados=ElementosContados-elementos;
+    if(ElementosContados<=0)
+    {
+         qDebug()<<"retrocedi llege a 100";
+//         ElementosContados=80;
+         int t=TotalElementos;
+         TotalElementos=TotalElementos-100;
+        ActualizarConsulta();
+        it=Mapa->end();
+        it-=20;
+
+        LlenarRepisa();
+        ElementosContados=100;
+        TotalElementos=t;
+    }
+    else
+    {
+    it-=elementos+20;
+    LlenarRepisa();
+    }
+
+
+
+if(TotalElementos<=20)
+{
+    Atras->setEnabled(false);
+}
+else
+{
+      Atras->setEnabled(true);
+}
+qDebug()<<"-->"<<TotalElementos;
 }
 
 void Repisa::SiguienteClick()
 {
-    qDebug()<<"funciona click Siguiente desde original";
 
-    for(int a=0; a<Botones.size(); a++)
+
+
+    if(ElementosContados>=100)
+    {
+         qDebug()<<" avanzo llege a 100";
+         ElementosContados=0;
+        ActualizarConsulta();
+        it=Mapa->begin();
+        LlenarRepisa();
+    }
+    else
     {
 
-        GrupoBotones->removeButton(Botones[a]);
-        delete Botones[a];
-
+    LlenarRepisa();
     }
 
-    Botones.clear();
-    LlenarRepisa();
+    ElementosContados=ElementosContados+elementos;
+    TotalElementos=TotalElementos+elementos;
+
+    if(TotalElementos<=20)
+    {
+        Atras->setEnabled(false);
+    }
+    else
+    {
+          Atras->setEnabled(true);
+    }
+
+qDebug()<<"-->"<<TotalElementos;
 }
 
 void Repisa::NuevoClick()
@@ -176,8 +243,12 @@ void Repisa::BuscarClick()
 {
 
 }
-#include "../Objetos/articulotipo.h"
-#include "../Definiciones.h"
+
+void Repisa::CerrarClick()
+{
+    this->close();
+}
+
 void Repisa::Dibujar()
 {
 
@@ -212,44 +283,29 @@ void Repisa::Dibujar()
 
 void Repisa::LlenarRepisa()
 {
+
+
+    LimpiarRepisa();
     fil=1;
     col=1;
     ix=40;
     iy=48;
-    elementos=0;
-    if(it==Mapa->begin())
-    {
-        Atras->setEnabled(false);
-    }
-    else
-    {
-          Atras->setEnabled(true);
-    }
+
+        elementos=0;
+
+
     while (it!=Mapa->end()&&fil<=5)
     {
 
         if(col<=4)
         {
-/*
-            QPushButton* pp=new QPushButton(this);
-            ArticuloTipo *i=(ArticuloTipo*)(it.value());
 
-            // qDebug()<<it.value().getCodigo();
-            pp->setObjectName(i->getCodigo());
-            pp->setIcon(DefBD::toQicon(i->getImagen()));
-            pp->setIconSize(QSize(55,55));
-            pp->setFlat(true);
-            pp->setGeometry(x,y,55,55);
-            pp->setToolTip("Codigo: "+i->getCodigo()+"\n"+"Nombre: "+i->getNombre());
-            GrupoBotones->addButton(pp);
-            Botones.push_back(pp);
-            pp->setVisible(true);
-*/
             ObjetosIndependientes();
             ix=ix+60;
             col++;
             it++;
             elementos++;
+
         }
         else
         {
@@ -262,7 +318,9 @@ void Repisa::LlenarRepisa()
 
    }
 
-    if(it==Mapa->end())
+
+
+    if(TotalElementos>=RegistrosTabla)
     {
         Siguiente->setEnabled(false);
     }
@@ -270,4 +328,23 @@ void Repisa::LlenarRepisa()
     {
          Siguiente->setEnabled(true);
     }
+
 }
+
+void Repisa::ActualizarMapa(ObjetoMaestro *Objeto)
+{
+    elementos=0;
+    TotalElementos=0;
+    ElementosContados=0;
+    ObjetoConsulta=Objeto;
+    ActualizarConsulta();
+    it=Mapa->begin();
+    LlenarRepisa();
+    ElementosContados=ElementosContados+elementos;
+    TotalElementos=TotalElementos+elementos;
+    qDebug()<<"-->"<<TotalElementos;
+}
+
+
+
+

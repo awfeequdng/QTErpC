@@ -4,7 +4,7 @@
 #include "Objetos.h"
 #include "Repisas/repisaarticulotipo.h"
 #include "Formularios/formarticulotipo.h"
-
+#include "Repisas/repisaimagenes.h"
 #include "Extras/visorimagenes.h"
 int main(int argc, char *argv[])
 {
@@ -41,9 +41,9 @@ int main(int argc, char *argv[])
        { qDebug()<<"no hay conexion";}
 */
 
-       VisorImagenes w;
-   // RepisaArticuloTipo* w=RepisaArticuloTipo::Iniciar();
-  w.show();
+   //    VisorImagenes w;
+    RepisaArticuloTipo* w=RepisaArticuloTipo::Iniciar();
+  w->show();
 
 
 

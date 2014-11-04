@@ -80,9 +80,6 @@ bool PgArticuloTipo::Actualizar(ArticuloTipo Antiguo, ArticuloTipo Nuevo)
 
 ArticuloTipo PgArticuloTipo::Buscar(ArticuloTipo valor)
 {
-
-
-
     QString consulta;
 
     consulta="SELECT codigo, nombre, imagen"
@@ -102,7 +99,7 @@ ArticuloTipo PgArticuloTipo::Buscar(ArticuloTipo valor)
     {
         consulta=consulta+" imagen like '%"+valor.getImagen()+"%' AND ";
     }
-    consulta.replace(consulta.size()-5,5,";");
+    consulta.replace(consulta.size()-6,5," ");
 
     qDebug()<<consulta;
 
@@ -126,11 +123,11 @@ ArticuloTipo PgArticuloTipo::Buscar(ArticuloTipo valor)
     return resp;
 }
 
-QMap<QString, ObjetoMaestro *> *PgArticuloTipo::BuscarMapa(ArticuloTipo valor, CONSULTA tipo)
+QMap<QString, ObjetoMaestro *> *PgArticuloTipo::BuscarMapa(ObjetoMaestro *valor, QString Extra, CONSULTA tipo)
 {
 
-
-
+    ArticuloTipo* val=(ArticuloTipo*)(valor);
+   qDebug()<<val->getCodigo();
     QString consulta;
 
     if(tipo==TODO)
@@ -143,20 +140,22 @@ QMap<QString, ObjetoMaestro *> *PgArticuloTipo::BuscarMapa(ArticuloTipo valor, C
         consulta="SELECT codigo, nombre, imagen"
         " FROM articulo_tipo WHERE ";
 
-    if(!valor.getCodigo().isNull())
+    if(!val->getCodigo().isNull())
     {
-        consulta=consulta+" codigo like '%"+valor.getCodigo()+"%' AND ";
+        consulta=consulta+" codigo like '%"+val->getCodigo()+"%' AND ";
     }
-    if(!valor.getNombre().isNull())
+    if(!val->getNombre().isNull())
     {
-        consulta=consulta+" nombre like '%"+valor.getNombre()+"%' AND ";
+        consulta=consulta+" nombre like '%"+val->getNombre()+"%' AND ";
     }
-    if(!valor.getImagen().isNull())
+    if(!val->getImagen().isNull())
     {
-        consulta=consulta+" imagen like '%"+valor.getImagen()+"%' AND ";
+        consulta=consulta+" imagen like '%"+val->getImagen()+"%' AND ";
     }
- consulta.replace(consulta.size()-5,5,";");
+    consulta.replace(consulta.size()-5,5," ");
     }
+
+    consulta=consulta+Extra;
 
     qDebug()<<consulta;
 
@@ -175,11 +174,57 @@ QMap<QString, ObjetoMaestro *> *PgArticuloTipo::BuscarMapa(ArticuloTipo valor, C
           salida->insert(resp->getCodigo(),(ObjetoMaestro*)resp);
 
       }
-//qDebug()<<salida->begin().key();
+
        return salida;
 }
 
 int PgArticuloTipo::Contar()
 {
-    return 0;
+      QString consulta="SELECT count(*) FROM articulo_tipo";
+      QSqlQuery query(consulta);
+    int num=0;
+        while (query.next() )
+        {
+          num=query.value(0).toInt();
+        }
+    return num;
+}
+
+
+QSqlQueryModel *PgArticuloTipo::BuscarTabla(ArticuloTipo valor, QString Extra, CONSULTA tipo)
+{
+
+    QString consulta;
+    if(tipo==TODO)
+    {
+            consulta="SELECT codigo, nombre, imagen"
+            " FROM articulo_tipo ";
+    }
+    else
+    {
+    consulta="SELECT codigo, nombre, imagen"
+            " FROM articulo_tipo WHERE ";
+
+    if(!valor.getCodigo().isNull())
+    {
+        consulta=consulta+" codigo like '%"+valor.getCodigo()+"%' AND ";
+    }
+    if(!valor.getNombre().isNull())
+    {
+        consulta=consulta+" nombre like '%"+valor.getNombre()+"%' AND ";
+    }
+    if(!valor.getImagen().isNull())
+    {
+        consulta=consulta+" imagen like '%"+valor.getImagen()+"%' AND ";
+    }
+    consulta.replace(consulta.size()-5,5," ");
+    }
+
+    consulta=consulta+Extra;
+    QSqlQueryModel* model=new QSqlQueryModel();
+    model->setQuery(consulta);
+
+    qDebug()<<consulta;
+
+    return model;
 }

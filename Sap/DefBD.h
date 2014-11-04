@@ -60,5 +60,15 @@ static QIcon   toQicon(QString ruta)
         return ic;
 }
 
+static QPixmap  toQpixmap(QString ruta)
+{
+    QPixmap p;
+    if(!p.load(RutaImagenes+ruta))
+    {
+        GuardarImagen(ruta);
+    }
+    return p;
+}
+
 };
 #endif // DEFBD_H

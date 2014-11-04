@@ -3,3 +3,8 @@
 ObjetoMaestro::ObjetoMaestro()
 {
 }
+
+ObjetoMaestro::~ObjetoMaestro()
+{
+
+}

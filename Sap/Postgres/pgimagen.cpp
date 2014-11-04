@@ -130,7 +130,7 @@ Imagen PgImagen::Buscar(Imagen valor)
     return resp;
 }
 
-QMap<QString, Imagen> *PgImagen::BuscarMapa(Imagen valor, CONSULTA tipo)
+QMap<QString, ObjetoMaestro*> *PgImagen::BuscarMapa(Imagen valor, CONSULTA tipo)
 {
 
 
@@ -170,19 +170,19 @@ QMap<QString, Imagen> *PgImagen::BuscarMapa(Imagen valor, CONSULTA tipo)
     qDebug()<<consulta;
 
 
-    QMap<QString,Imagen>* salida=new QMap<QString,Imagen>();
+    QMap<QString,ObjetoMaestro*>* salida=new QMap<QString,ObjetoMaestro*>();
 
 
 
     QSqlQuery query(consulta);
 
       while (query.next() ) {
-           Imagen resp;
-          resp.setCodigo(query.value(0).toString());
-          resp.setCarpeta(query.value(1).toString());
-          resp.setNombre(query.value(2).toString());
-          resp.setPixel(query.value(3).toByteArray());
-          salida->insert(resp.getCodigo(), resp);
+           Imagen* resp=new Imagen();
+          resp->setCodigo(query.value(0).toString());
+          resp->setCarpeta(query.value(1).toString());
+          resp->setNombre(query.value(2).toString());
+          resp->setPixel(query.value(3).toByteArray());
+          salida->insert(resp->getCodigo(), (ObjetoMaestro*)resp);
       }
 
 

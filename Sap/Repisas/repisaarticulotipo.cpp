@@ -2,7 +2,7 @@
 
 RepisaArticuloTipo::RepisaArticuloTipo():Repisa()
 {
-    ActualizarMapa();
+    ActualizarMapa((ObjetoMaestro*)new ArticuloTipo());
 }
 
 RepisaArticuloTipo* RepisaArticuloTipo::mUnico=0;
@@ -11,39 +11,47 @@ RepisaArticuloTipo* RepisaArticuloTipo::mUnico=0;
 
 void RepisaArticuloTipo::NuevoClick()
 {
-    Dialogo=new FormArticuloTipo();
-    Dialogo->show();
+    Dialogo=new FormArticuloTipo(this);
+    Dialogo->move(this->x()+this->width(),this->y());
+    Dialogo->exec();
+
 }
 
 
 void RepisaArticuloTipo::BuscarClick()
 {
-     qDebug()<<"buscar desde repisa nueva";
+    Busqueda=new BusquedaArticuloTipos(this);
+     Busqueda->move(this->x()+this->width(),this->y());
+    Busqueda->show();
+
+
 }
-
-
-
-void RepisaArticuloTipo::ActualizarMapa()
+void RepisaArticuloTipo::ActualizarConsulta()
 {
-    Bd=DefBD::IniciarBD();
     FabricaLocal=Bd->Fabrica->CrearArticuloTipo();
     Bd->Fabrica->Conectar();
-    Mapa=FabricaLocal->BuscarMapa(ArticuloTipo(),TODO);
+
+    RegistrosTabla=FabricaLocal->Contar();
+    // qDebug()<<"elem:"+TotalElementos;
+    QString extra="LIMIT 100 offset "+QString::number(TotalElementos);
+    qDebug()<<"aqui toy";
+    qDebug()<<((ArticuloTipo*)(ObjetoConsulta))->getCodigo();
+    Mapa=FabricaLocal->BuscarMapa(ObjetoConsulta,extra,CAMPOS);
+    qDebug()<<"aqui luego toy";
     Bd->Fabrica->Desconectar();
     qDebug()<<Mapa->size();
-    it=Mapa->begin();
     GrupoBotones=new QButtonGroup(this);
     connect(GrupoBotones, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(GrupoBotonesClick(QAbstractButton*)));
-
-    SiguienteClick();
 }
+
 
 void RepisaArticuloTipo::ObjetosIndependientes()
 {
+    /*
+     * Para el Tool Tip
+    */
     QPushButton* pp=new QPushButton(this);
     ArticuloTipo *i=(ArticuloTipo*)(it.value());
-
-    // qDebug()<<it.value().getCodigo();
     pp->setObjectName(i->getCodigo());
     pp->setIcon(DefBD::toQicon(i->getImagen()));
     pp->setIconSize(QSize(55,55));
@@ -72,7 +80,8 @@ RepisaArticuloTipo *RepisaArticuloTipo::Iniciar()
 void RepisaArticuloTipo::GrupoBotonesClick(QAbstractButton* buttonID)
 {
 
-    Dialogo=new FormArticuloTipo();
+    Dialogo=new FormArticuloTipo(this);
+    Dialogo->move(this->x()+this->width(),this->y());
 
     Bd=FabricaBaseDatos::IniciarFabrica(POSTGRES);
     FabricaLocal=Bd->Fabrica->CrearArticuloTipo();
