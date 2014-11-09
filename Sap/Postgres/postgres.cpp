@@ -48,6 +48,11 @@ FabricaClientes *Postgres::CrearCliente()
     return new PgCliente();
 }
 
+FabricaArticulos *Postgres::CrearArticulos()
+{
+    return new PgArticulos();
+}
+
 
 FabricaArticuloTipos *Postgres::CrearArticuloTipo()
 {

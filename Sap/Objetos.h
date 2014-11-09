@@ -3,4 +3,5 @@
 #include "Objetos/basedatos.h"
 #include "Objetos/cliente.h"
 #include "Objetos/articulotipo.h"
+#include "Objetos/articulos.h"
 #endif // OBJETOS_H

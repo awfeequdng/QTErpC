@@ -9,6 +9,8 @@
 #include <QIcon>
 #include "objetomaestro.h"
 
+using namespace std;
+
 class Articulos:public QIcon,ObjetoMaestro
 {
 protected:

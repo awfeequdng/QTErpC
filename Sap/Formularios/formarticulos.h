@@ -13,7 +13,7 @@ class FormArticulos;
 }
 class RepisaArticulos;
 
-class FormArticulos
+class FormArticulos: public QWidget
 {
     Q_OBJECT
 

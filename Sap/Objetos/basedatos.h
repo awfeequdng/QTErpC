@@ -4,6 +4,7 @@
 #include <string>
 
 #include "../Fabricas/fabricaclientes.h"
+#include "../Fabricas/fabricaarticulos.h"
 #include "../Fabricas/fabricaarticulotipos.h"
 #include "../Fabricas/fabricaimagenes.h"
 
@@ -49,6 +50,7 @@ public:
 
     virtual FabricaClientes       *CrearCliente()=0;
     virtual FabricaArticuloTipos  *CrearArticuloTipo()=0;
+    virtual FabricaArticulos  *CrearArticulos()=0;
     virtual FabricaImagenes       *CrearImagen()=0;
 
 };

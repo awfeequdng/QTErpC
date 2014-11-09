@@ -5,6 +5,7 @@
 #include "Repisas/repisaarticulotipo.h"
 #include "Repisas/repisaarticulos.h"
 #include "Formularios/formarticulotipo.h"
+#include "Formularios/formarticulos.h"
 
 #include "Extras/visorimagenes.h"
 int main(int argc, char *argv[])

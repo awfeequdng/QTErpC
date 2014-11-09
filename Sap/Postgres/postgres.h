@@ -3,6 +3,7 @@
 #include "../Objetos/basedatos.h"
 #include <QSqlDatabase>
 #include "pgcliente.h"
+#include "pgarticulos.h"
 #include "pgarticulotipo.h"
 #include "pgimagen.h"
 class Postgres:public BaseDatos
@@ -22,7 +23,8 @@ public:
     // BaseDatos interface
 public:
     FabricaClientes *CrearCliente();
-    FabricaArticuloTipos *CrearArticuloTipo();   
+    FabricaArticuloTipos *CrearArticuloTipo();
+    FabricaArticulos* CrearArticulos();
     FabricaImagenes *CrearImagen();
 };
 
